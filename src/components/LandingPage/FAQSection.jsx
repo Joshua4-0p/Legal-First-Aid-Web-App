@@ -20,7 +20,7 @@ const FAQSection = () => {
         <h2 className="text-3xl sm:text-4xl lg:text-5xl mt-10 lg:mt-20 tracking-wide">
           {/* above styling means that on small screen(sm) text size is 5xl on large(lg) text-size of 6xl with margin-top of 10 */}
           Frequently asked questions{" "}
-          <span className="bg-gradient-to-r from-[#4169E1] to-blue-900 text-transparent bg-clip-text">
+          <span className="bg-gradient-to-r  from-neutral-800 to-neutral-500 text-transparent bg-clip-text">
             by users
           </span>
         </h2>

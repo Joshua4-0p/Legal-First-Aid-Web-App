@@ -125,24 +125,24 @@ export const FAQs = [
     description:
       "By familiarizing yourself with relevant laws and regulations, you can identify when your rights are being violated and respond appropriately. Legal First Aid provides practical guidance and resources to help you take the necessary legal steps.",
   },
-  {
-    icon: <CircleCheck />, // Visual Icon: Check circle indicates accuracy and trust.
-    text: "Is the information on Legal First Aid up-to-date and accurate?",
-    description:
-      "Absolutely. We are committed to providing current and accurate legal information. Our content is regularly reviewed and updated by legal professionals to ensure you have the most recent insights into Cameroon's laws.",
-  },
-  {
-    icon: <MessageSquare />, // Visual Icon: Message icon for personalized communication.
-    text: "Can I get personalized legal advice through the app?",
-    description:
-      "Yes, you can. With our 'Expert Connect' feature, you can schedule consultations with verified legal professionals who provide personalized advice tailored to your specific situation.",
-  },
-  {
-    icon: <Search />, // Visual Icon: Search icon for ease of navigation.
-    text: "How do I find answers to specific legal questions I have?",
-    description:
-      "You can use our search function to quickly locate topics of interest or browse through categorized sections covering various legal areas. If you don't find what you're looking for, you can submit your question, and we'll guide you to the right resources or connect you with an expert.",
-  },
+  // {
+  //   icon: <CircleCheck />, // Visual Icon: Check circle indicates accuracy and trust.
+  //   text: "Is the information on Legal First Aid up-to-date and accurate?",
+  //   description:
+  //     "Absolutely. We are committed to providing current and accurate legal information. Our content is regularly reviewed and updated by legal professionals to ensure you have the most recent insights into Cameroon's laws.",
+  // },
+  // {
+  //   icon: <MessageSquare />, // Visual Icon: Message icon for personalized communication.
+  //   text: "Can I get personalized legal advice through the app?",
+  //   description:
+  //     "Yes, you can. With our 'Expert Connect' feature, you can schedule consultations with verified legal professionals who provide personalized advice tailored to your specific situation.",
+  // },
+  // {
+  //   icon: <Search />, // Visual Icon: Search icon for ease of navigation.
+  //   text: "How do I find answers to specific legal questions I have?",
+  //   description:
+  //     "You can use our search function to quickly locate topics of interest or browse through categorized sections covering various legal areas. If you don't find what you're looking for, you can submit your question, and we'll guide you to the right resources or connect you with an expert.",
+  // },
   
 ];
 

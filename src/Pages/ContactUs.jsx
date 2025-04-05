@@ -7,7 +7,7 @@ import {
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
-import emailjs from "emailjs-com"; //or you could still import emailjs from "@emailjs/browser" if you prefer
+import emailjs from "@emailjs/browser"; //or you could still import emailjs from "@emailjs/browser" if you prefer
 import image1 from "../assets/Scale-Balance-Of-Justice.png";
 import image2 from "../assets/Scale Balancing Image3-B.jpg";
 import image3 from "../assets/Scale balance of justice3.png";

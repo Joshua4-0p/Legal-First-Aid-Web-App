@@ -7,7 +7,7 @@ const Testimonials = () => {
       <div className="text-center">
         <h2 className="text-3xl sm:text-5xl lg:text-6xl mt-10 lg:mt-20 tracking-wider mb-5">
           What people{" "}
-          <span className=" text-transparent bg-clip-text bg-gradient-to-r from-[#4169E1] to-blue-900">
+          <span className=" text-transparent bg-clip-text bg-gradient-to-r from-neutral-800 to-neutral-500">
             {/* bg-clip-text: it place the background color to be the color of the text instead */}
             are saying
           </span>

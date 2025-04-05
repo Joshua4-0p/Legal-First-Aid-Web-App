@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 // Example logo import — update the path to match your project
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/Logo.png";
 import { navItems } from "../../constants";
 const Navbar = () => {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
