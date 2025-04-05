@@ -46,11 +46,11 @@ const AboutPage = () => {
               } blur-sm`}
             />
           ))}
-          <div className="container mx-[34%] my-35 relative z-10">
-            <h1 className="text-5xl font-bold mb-6 px-7">
+          <div className="container mx-auto text-center mt-30 relative z-10">
+            <h1 className="text-5xl font-bold mb-6">
               About Legal First Aid
             </h1>
-            <p className="text-2xl text-neutral-300 max-w-2xl">
+            <p className="text-2xl text-neutral-300 max-w-2xl mx-auto">
               Empowering Citizens Through Legal Knowledge
             </p>
           </div>

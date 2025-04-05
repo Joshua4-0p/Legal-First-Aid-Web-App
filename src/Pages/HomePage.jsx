@@ -21,6 +21,7 @@ function HomePage() {
   const [preview, setPreview] = useState("");
   // State for likes
   const [likes, setLikes] = useState({});
+  const [likedPosts, setLikedPosts] = useState(new Set());
   // Add these states at the top of your component
   const [commentText, setCommentText] = useState("");
   const [editingSuggestionId, setEditingSuggestionId] = useState(null);
@@ -126,25 +127,35 @@ function HomePage() {
 
   // Replace handleLike with:
   // Replace handleLike with:
-  const handleLike = async (situationId) => {
-    try {
-      const response = await fetch(
-        `https://rrn24.techchantier.com/Legal_First_Aid/public/api/situations/${situationId}/like`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+  const handleLike = (situationId) => {
+  setLikes(prevLikes => {
+    const currentCount = prevLikes[situationId] || 0;
+    const newCount = likedPosts.has(situationId) ? currentCount - 1 : currentCount + 1;
+    
+    return {
+      ...prevLikes,
+      [situationId]: newCount
+    };
+  });
 
-      if (response.ok) {
-        fetchSituations(); // Refresh post data
-      }
-    } catch (error) {
-      console.error("Like failed:", error);
+  setLikedPosts(prev => {
+    const newSet = new Set(prev);
+    if (newSet.has(situationId)) {
+      newSet.delete(situationId);
+    } else {
+      newSet.add(situationId);
     }
+    return newSet;
+  });
   };
+  
+  useEffect(() => {
+    const initialLikes = {};
+    apiSituations.forEach((post) => {
+      initialLikes[post.id] = post.likes_count || 0;
+    });
+    setLikes(initialLikes);
+  }, [apiSituations]);
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -476,7 +487,9 @@ function HomePage() {
                   onClick={() => handleLike(situation.id)}
                 >
                   <ThumbsUp className="w-5 h-5" />
-                  <span>Like {situation.likes_count || 0}</span>
+                  <span className="ml-2 my-auto text-[17px]">
+                    Like {likes[situation.id] || 0}
+                  </span>
                 </button>
 
                 {situation.user?.id ===
