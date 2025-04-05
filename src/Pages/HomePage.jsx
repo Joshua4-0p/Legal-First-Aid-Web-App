@@ -388,30 +388,32 @@ function HomePage() {
 
   return (
     <div className="relative mt-4 border-b border-neutral-900/70 min-h-[800px]">
-      <div className="flex justify-center items-center">
-        <div className="border rounded-lg lg:w-[65%] sm:w-[80%] h-auto shadow-xl bg-white">
-          <div className="flex p-3 items-start">
-            <div className="text-neutral-600 mr-2">
-              <CircleUserRound size={45} />
+      {/* Create Post Input */}
+      <div className="flex justify-center items-center px-2">
+        <div className="border rounded-lg w-full max-w-[95%] md:max-w-[85%] lg:max-w-[65%] h-auto shadow-xl bg-white">
+          <div className="flex p-3 items-start gap-2">
+            <div className="text-neutral-600">
+              <CircleUserRound className="w-8 h-8 md:w-10 md:h-10" />
             </div>
             <input
               type="text"
               name="post"
               placeholder="What do you want to ask or share?"
-              className="w-full px-3 py-2 border rounded-full focus:outline-none focus:ring-1 focus:ring-black"
+              className="w-full px-3 py-2 border rounded-full focus:outline-none focus:ring-1 focus:ring-black text-sm md:text-base"
               onClick={handleInputClick}
               readOnly
             />
           </div>
-          <div className="flex justify-between items-center mx-15 mb-4">
-            <div className="flex" onClick={handleInputClick}>
-              <FileQuestion size={30} />
-              <span className="ml-2 text-[17px] tracking-wider font-semibold">
-                Ask
-              </span>
-            </div>
+          <div className="flex justify-between items-center px-4 pb-4 flex-wrap gap-2">
             <button
-              className="rounded-full w-25 h-auto items-end bg-black p-2 text-white"
+              className="flex items-center gap-1 text-sm md:text-base"
+              onClick={handleInputClick}
+            >
+              <FileQuestion className="w-5 h-5 md:w-6 md:h-6" />
+              <span>Ask</span>
+            </button>
+            <button
+              className="rounded-full px-4 py-2 bg-black text-white text-sm md:text-base hover:bg-gray-800 transition-colors"
               onClick={handleInputClick}
             >
               Post
@@ -420,60 +422,67 @@ function HomePage() {
         </div>
       </div>
       {/* Render the fetched situations */}
-      {apiSituations.map((situation, index) => (
-        <div key={situation.id}>
-          <div className="flex flex-col mx-auto lg:w-[65%] my-2 sm:w-[80%] justify-start rounded-lg border shadow h-auto bg-white">
-            {/* Replace the entire flex justify-between div with this */}
-            <div className="flex justify-between items-center p-4">
-              <div className="flex items-center">
-                <div className="bg-black w-12 h-12 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xl font-bold">
-                    {(situation.user?.name?.[0] || "A").toUpperCase()}
-                  </span>
+      {/* Posts Feed */}
+      <div className="space-y-4 mt-4 px-2">
+        {apiSituations.map((situation, index) => (
+          <div key={situation.id} className="flex justify-center">
+            <div className="w-full max-w-[95%] md:max-w-[85%] lg:max-w-[65%] bg-white rounded-lg border shadow">
+              {/* Post Header */}
+              <div className="flex justify-between items-center p-4">
+                <div className="flex items-center gap-3">
+                  <div className="bg-black w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center">
+                    <span className="text-white text-lg md:text-xl font-bold">
+                      {(situation.user?.name?.[0] || "A").toUpperCase()}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-sm md:text-base">
+                      {situation.user?.name || "Anonymous User"}
+                    </h3>
+                    <p className="text-xs text-gray-500">
+                      {new Date(situation.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
-                <div className="ml-3">
-                  <h3 className="font-semibold">
-                    {situation.user?.name || "Anonymous User"}
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {new Date(situation.created_at).toLocaleDateString()}
-                  </p>
-                </div>
+                <button
+                  onClick={() => handleDeletePost(situation.id)}
+                  className="text-gray-500 hover:text-gray-700 p-1"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-              <button
-                onClick={() => handleDeletePost(situation.id)}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <X size={20} />
-              </button>
-            </div>
-            <div className="text-md mb-3">
-              <p className="mx-7 font-semibold text-2xl">{situation.title}</p>
-              <p className="ml-7 text-xl mb-3">{situation.description}</p>
-              {/* In the image display section */}
-              {situation.image && (
-                <img
-                  src={situation.image}
-                  className="mx-auto mb-4 rounded-lg max-w-full"
-                  alt="Situation visual"
-                />
-              )}
-            </div>
-            <div className="flex justify-between mb-2">
-              <div
-                className="flex px-3 py-2"
-                onClick={() => handleLike(situation.id)}
-              >
-                <ThumbsUp size={25} />
-                <span className="ml-2 my-auto text-[17px]">
-                  Like {situation.likes_count || 0}
-                </span>
+
+              {/* Post Content */}
+              <div className="px-4 pb-4">
+                <h2 className="text-lg md:text-xl font-semibold mb-2">
+                  {situation.title}
+                </h2>
+                <p className="text-gray-600 text-sm md:text-base mb-4">
+                  {situation.description}
+                </p>
+                {situation.image && (
+                  <img
+                    src={situation.image}
+                    className="w-full max-h-64 object-cover rounded-lg"
+                    alt="Post visual"
+                  />
+                )}
               </div>
-              <div className="flex px-3 py-2">
-                {/* Only show edit button if current user is post owner */}
+
+              {/* Post Actions */}
+              <div className="flex justify-between items-center px-4 pb-4 gap-2 flex-wrap">
+                <button
+                  className="flex items-center gap-1 text-sm md:text-base"
+                  onClick={() => handleLike(situation.id)}
+                >
+                  <ThumbsUp className="w-5 h-5" />
+                  <span>Like {situation.likes_count || 0}</span>
+                </button>
+
                 {situation.user?.id ===
                   JSON.parse(localStorage.getItem("user"))?.id && (
                   <button
+                    className="flex items-center gap-1 text-sm md:text-base text-blue-600 hover:text-blue-800"
                     onClick={() => {
                       setEditingPost(situation);
                       setEditFormData({
@@ -482,142 +491,136 @@ function HomePage() {
                         image: null,
                       });
                     }}
-                    className="flex items-center hover:text-blue-600"
                   >
-                    <Pencil size={25} />
-                    <span className="ml-2 text-[17px]">Edit Post</span>
+                    <Pencil className="w-5 h-5" />
+                    <span>Edit</span>
                   </button>
                 )}
+
+                <button
+                  className="flex items-center gap-1 text-sm md:text-base"
+                  onClick={() => handleCommentClick(situation.id, index)}
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  <span>Comment</span>
+                </button>
               </div>
-              <button
-                className="flex px-3 py-2"
-                onClick={() => handleCommentClick(situation.id, index)}
-              >
-                <MessageCircle size={25} />
-                <span className="ml-2 my-auto text-[17px]">Comment</span>
-              </button>
+
+              {/* Comments Section */}
+              {openComment[index] && (
+                <div className="border-t">
+                  <div className="p-4 space-y-4">
+                    <div className="flex gap-2 items-start">
+                      <CircleUserRound className="w-8 h-8 flex-shrink-0" />
+                      <input
+                        type="text"
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        placeholder="Write Your Comment Here!"
+                        className="w-full px-3 py-2 border rounded-full text-sm md:text-base"
+                      />
+                      <button
+                        onClick={() =>
+                          handleCommentSubmit(situation.id, commentText)
+                        }
+                        className={`px-4 py-2 rounded-full text-sm md:text-base ${
+                          JSON.parse(localStorage.getItem("user"))?.role ===
+                          "lawyer"
+                            ? "bg-black text-white hover:bg-gray-800"
+                            : "bg-gray-300 cursor-not-allowed"
+                        }`}
+                        disabled={
+                          JSON.parse(localStorage.getItem("user"))?.role !==
+                          "lawyer"
+                        }
+                      >
+                        Add
+                      </button>
+                    </div>
+
+                    <div className="space-y-3">
+                      {situation.suggestions?.map((suggestion) => (
+                        <div key={suggestion.id} className="group relative">
+                          <div className="flex items-center mb-3 justify-between">
+                            <div className="flex items-center">
+                              <div className="bg-gray-200 w-8 h-8 rounded-full flex items-center justify-center">
+                                <span className="text-sm font-bold">
+                                  {suggestion.lawyer?.name[0] || "L"}
+                                </span>
+                              </div>
+                              <div className="ml-3">
+                                <h4 className="font-medium">
+                                  {suggestion.lawyer?.name || "Legal Expert"}
+                                </h4>
+                                {editingSuggestionId === suggestion.id ? (
+                                  <input
+                                    type="text"
+                                    value={editCommentText}
+                                    onChange={(e) =>
+                                      setEditCommentText(e.target.value)
+                                    }
+                                    className="border rounded px-2 py-1"
+                                  />
+                                ) : (
+                                  <p className="text-gray-600 text-sm">
+                                    {suggestion.answer}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Edit/Delete Controls */}
+                            {JSON.parse(localStorage.getItem("user"))?.id ===
+                              suggestion.lawyer?.id && (
+                              <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                {editingSuggestionId === suggestion.id ? (
+                                  <button
+                                    onClick={() =>
+                                      handleEditSuggestion(suggestion.id)
+                                    }
+                                    className="text-green-600 hover:text-green-800"
+                                  >
+                                    Save
+                                  </button>
+                                ) : (
+                                  <button
+                                    onClick={() => {
+                                      setEditingSuggestionId(suggestion.id);
+                                      setEditCommentText(suggestion.answer);
+                                    }}
+                                    className="text-blue-600 hover:text-blue-800"
+                                  >
+                                    <Pencil size={16} />
+                                  </button>
+                                )}
+                                <button
+                                  onClick={() =>
+                                    handleDeleteSuggestion(suggestion.id)
+                                  }
+                                  className="text-red-600 hover:text-red-800"
+                                >
+                                  <X size={16} />
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-500">
+                            {new Date(suggestion.created_at).toLocaleString()}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-          {openComment[index] && (
-            <div className="flex flex-col mx-auto">
-              <div className="lg:w-[65%] sm:w-[80%] mx-auto bg-neutral-200 border border-neutral-300">
-                <div className="flex p-3 items-start gap-2 flex-col sm:flex-row">
-                  <div className="text-neutral-600 mr-2">
-                    <CircleUserRound size={45} />
-                  </div>
-                  <div className="w-full bg-white rounded-full">
-                    <input
-                      type="text"
-                      value={commentText}
-                      onChange={(e) => setCommentText(e.target.value)}
-                      placeholder="Write Your Comment Here!"
-                      className="w-full px-3 py-2 border rounded-full focus:outline-none focus:ring-1 focus:ring-black"
-                    />
-                  </div>
-                  <button
-                    onClick={() =>
-                      handleCommentSubmit(situation.id, commentText)
-                    }
-                    className={`rounded-full w-full sm:w-auto font-semibold ml-2 h-auto p-2 ${
-                      JSON.parse(localStorage.getItem("user"))?.role ===
-                      "lawyer"
-                        ? "bg-black text-white hover:bg-gray-800"
-                        : "bg-gray-300 cursor-not-allowed"
-                    }`}
-                    disabled={
-                      JSON.parse(localStorage.getItem("user"))?.role !==
-                      "lawyer"
-                    }
-                  >
-                    Add Comment
-                  </button>
-                </div>
-              </div>
-
-              {/* Enhanced Comments Display */}
-              <div className="border shadow-xl border-neutral-300 lg:w-[65%] sm:w-[80%] bg-white mx-auto p-3">
-                <h1 className="border-b pb-4 pt-3 px-3">
-                  Legal Suggestions {situation.id}
-                </h1>
-                {situation.suggestions?.map((suggestion) => (
-                  <div key={suggestion.id} className="group relative">
-                    <div className="flex items-center mb-3 justify-between">
-                      <div className="flex items-center">
-                        <div className="bg-gray-200 w-8 h-8 rounded-full flex items-center justify-center">
-                          <span className="text-sm font-bold">
-                            {suggestion.lawyer?.name[0] || "L"}
-                          </span>
-                        </div>
-                        <div className="ml-3">
-                          <h4 className="font-medium">
-                            {suggestion.lawyer?.name || "Legal Expert"}
-                          </h4>
-                          {editingSuggestionId === suggestion.id ? (
-                            <input
-                              type="text"
-                              value={editCommentText}
-                              onChange={(e) =>
-                                setEditCommentText(e.target.value)
-                              }
-                              className="border rounded px-2 py-1"
-                            />
-                          ) : (
-                            <p className="text-gray-600 text-sm">
-                              {suggestion.answer}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Edit/Delete Controls */}
-                      {JSON.parse(localStorage.getItem("user"))?.id ===
-                        suggestion.lawyer?.id && (
-                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          {editingSuggestionId === suggestion.id ? (
-                            <button
-                              onClick={() =>
-                                handleEditSuggestion(suggestion.id)
-                              }
-                              className="text-green-600 hover:text-green-800"
-                            >
-                              Save
-                            </button>
-                          ) : (
-                            <button
-                              onClick={() => {
-                                setEditingSuggestionId(suggestion.id);
-                                setEditCommentText(suggestion.answer);
-                              }}
-                              className="text-blue-600 hover:text-blue-800"
-                            >
-                              <Pencil size={16} />
-                            </button>
-                          )}
-                          <button
-                            onClick={() =>
-                              handleDeleteSuggestion(suggestion.id)
-                            }
-                            className="text-red-600 hover:text-red-800"
-                          >
-                            <X size={16} />
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                    <p className="text-xs text-gray-500">
-                      {new Date(suggestion.created_at).toLocaleString()}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      ))}
+        ))}
+      </div>
       {/* Add this modal component near your existing modal */}
       {editingPost && (
-        <div className="fixed inset-0 flex items-center justify-center backdrop-blur">
-          <div className="bg-white p-6 rounded-lg shadow-lg lg:w-[50%] md:w-[75%] h-[70%] relative">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-2">
+          <div className="bg-white rounded-lg w-full max-w-[95%] md:max-w-[85%] lg:max-w-[65%] max-h-[90vh] overflow-y-auto p-5">
             <div className="flex justify-between">
               <h2 className="text-2xl font-bold mb-4">Edit Post</h2>
               <button onClick={() => setEditingPost(null)}>
@@ -689,8 +692,8 @@ function HomePage() {
         </div>
       )}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center backdrop-blur">
-          <div className="bg-white p-6 rounded-lg shadow-lg lg:w-[50%] sm:w-[75%] md:w-[75%] h-[75%] relative">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-2">
+          <div className="bg-white rounded-lg w-full max-w-[95%] md:max-w-[85%] lg:max-w-[65%] max-h-[90vh] overflow-y-auto p-5">
             <div className="flex justify-between">
               <h2 className="text-2xl font-bold mb-4">Create Post</h2>
               <button onClick={handleCloseModal}>
@@ -762,3 +765,9 @@ function HomePage() {
 }
 
 export default HomePage;
+
+
+
+
+
+
