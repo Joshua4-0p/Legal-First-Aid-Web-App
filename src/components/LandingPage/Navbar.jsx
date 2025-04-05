@@ -208,6 +208,19 @@ const Navbar = () => {
       {mobileDrawerOpen && (
         <div className="lg:hidden fixed top-16 left-0 right-0 bg-white shadow-md z-40">
           {/* Nav items */}
+          <ul className="flex flex-col space-y-4 p-4 ">
+            {navItems.map((item, index) => (
+              <li key={index} className="border-b pb-2">
+                <Link
+                  onClick={() => setMobileDrawerOpen(false)}
+                  to={item.href}
+                  className="block w-full text-center"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
           {!user && (
             <div className="flex flex-col items-center p-4 space-y-4">
               <Link
